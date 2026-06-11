@@ -24,10 +24,12 @@ type LogoProps = Readonly<SVGProps<SVGSVGElement>>
 function TelecentroLogo(props: LogoProps): ReactElement {
   return (
     <svg viewBox="0 0 64 64" role="img" aria-label="Telecentro" {...props}>
-      <circle cx="32" cy="32" r="25" fill="#4d78e6" opacity="0.18" />
-      <path d="M14 22 32 12l18 10-18 10-18-10Z" fill="#4d78e6" />
-      <path d="M20 27h24v7h-8v18h-8V34h-8v-7Z" fill="#4d78e6" />
-      <path d="M19 23 32 16l13 7-13 7-13-7Z" fill="#fcfcfc" opacity="0.86" />
+      <path
+        d="M32 9c13 0 22 8 22 20 0 15-14 24-22 28-8-4-22-13-22-28C10 17 19 9 32 9Z"
+        fill="#5279e9"
+      />
+      <path d="M20 23h24v7h-8v19h-8V30h-8v-7Z" fill="#fcfcfc" />
+      <path d="M17 33c10 8 20 8 30 0" fill="none" stroke="#fcfcfc" strokeLinecap="round" strokeWidth="4" />
     </svg>
   )
 }
@@ -36,15 +38,14 @@ function WarnerLogo(props: LogoProps): ReactElement {
   return (
     <svg viewBox="0 0 64 64" role="img" aria-label="Warner Bros. Discovery" {...props}>
       <path
-        d="M14 8h36l-4 36c-.9 8.1-6.6 12.2-14 14-7.4-1.8-13.1-5.9-14-14L14 8Z"
-        fill="#f5cb45"
-        stroke="#274487"
+        d="M12 7h40l-4 37c-1 8.8-7.5 13.2-16 15-8.5-1.8-15-6.2-16-15L12 7Z"
+        fill="#ffd84d"
+        stroke="#233c87"
         strokeLinejoin="round"
-        strokeWidth="3"
+        strokeWidth="3.4"
       />
-      <text x="32" y="39" fill="#274487" fontFamily="Nunito, sans-serif" fontSize="17" fontWeight="900" textAnchor="middle">
-        WB
-      </text>
+      <path d="M20 20h6l2 17 4-17h6l3 17 2-17h6l-5 27h-7l-3-15-4 15h-7l-3-27Z" fill="#233c87" />
+      <path d="M36 21h8c4.6 0 7.2 4.6 4.1 8 4.1 3.5 1.4 9.8-3.9 9.8H36V21Zm6 6.6c2 0 2.4-3.1.1-3.1h-1.6v3.1H42Zm.4 7.7c2.5 0 2.7-3.7 0-3.7h-1.9v3.7h1.9Z" fill="#233c87" />
     </svg>
   )
 }
@@ -166,6 +167,32 @@ function GrafanaLogo(props: LogoProps): ReactElement {
   )
 }
 
+function UtnLogo(props: LogoProps): ReactElement {
+  return (
+    <svg viewBox="0 0 64 64" role="img" aria-label="UTN" {...props}>
+      <g fill="none" stroke="#4b4d5f" strokeLinecap="round" strokeLinejoin="round" strokeWidth="4">
+        <path d="M32 10v44M10 32h44M17 17l30 30M47 17 17 47" />
+        <circle cx="32" cy="32" r="11" />
+      </g>
+    </svg>
+  )
+}
+
+function LanguageDotsLogo(props: LogoProps): ReactElement {
+  return (
+    <svg viewBox="0 0 64 64" role="img" aria-label="Idiomas" {...props}>
+      <g fill="#5e7fea">
+        <circle cx="19" cy="22" r="5" />
+        <circle cx="32" cy="22" r="5" />
+        <circle cx="45" cy="22" r="5" />
+        <circle cx="19" cy="42" r="5" />
+        <circle cx="32" cy="42" r="5" />
+      </g>
+      <circle cx="45" cy="42" r="5" fill="#d7def3" />
+    </svg>
+  )
+}
+
 const skillLogos: Record<SkillLogo, (props: LogoProps) => ReactElement> = {
   go: GoLogo,
   python: PythonLogo,
@@ -184,6 +211,14 @@ function CompanyLogo(props: { readonly company: string }): ReactElement {
   }
 
   return <WarnerLogo />
+}
+
+function AboutLogo(props: { readonly title: string }): ReactElement {
+  if (props.title === 'Ingenieria en Sistemas') {
+    return <UtnLogo />
+  }
+
+  return <LanguageDotsLogo />
 }
 
 function Header(): ReactElement {
@@ -277,14 +312,10 @@ function Experience(): ReactElement {
       </SectionTitle>
       <div className="experience-orbit" aria-hidden="true" />
       <div className="experience-list">
-        {experiences.map((item, index) => (
-          <motion.article
+        {experiences.map((item) => (
+          <article
             className="experience-item"
             key={item.company}
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.45, delay: index * 0.08 }}
           >
             <span>{item.period}</span>
             <h3>{item.company}</h3>
@@ -293,7 +324,7 @@ function Experience(): ReactElement {
             <div className="experience-token">
               <CompanyLogo company={item.company} />
             </div>
-          </motion.article>
+          </article>
         ))}
         <article className="experience-item future">
           <span>Next</span>
@@ -378,11 +409,9 @@ function About(): ReactElement {
         <p>I love learning, mentoring and building tools that make teams more effective.</p>
       </article>
       {educationItems.slice(0, 2).map((item) => {
-        const Icon = item.Icon
-
         return (
           <article className="about-card" key={item.title}>
-            <Icon size={26} aria-hidden="true" />
+            <AboutLogo title={item.title} />
             <h3>{item.title}</h3>
             <p>{item.body}</p>
           </article>

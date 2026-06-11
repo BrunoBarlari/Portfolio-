@@ -367,8 +367,8 @@
 
 .experience-token svg {
   display: block;
-  height: 68px;
-  width: 68px;
+  height: 72px;
+  width: 72px;
 }
 
 .future .experience-token {
@@ -395,8 +395,8 @@
   background:
     url("data:image/svg+xml,%3Csvg width='940' height='250' viewBox='0 0 940 250' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M70 150C164 78 236 86 315 125C402 168 455 80 545 98C653 120 712 195 850 91' stroke='%23939CB5' stroke-opacity='.45' stroke-width='1.5' stroke-dasharray='8 10'/%3E%3Cpath d='M185 55C258 100 344 114 460 94C566 76 639 142 740 144' stroke='%23939CB5' stroke-opacity='.28' stroke-dasharray='7 9'/%3E%3C/svg%3E") center / 96% auto no-repeat;
   display: grid;
-  gap: clamp(18px, 3vw, 42px);
-  grid-template-columns: repeat(9, minmax(68px, 1fr));
+  gap: clamp(14px, 2.1vw, 30px);
+  grid-template-columns: repeat(9, minmax(92px, 1fr));
   min-height: 250px;
   padding: 26px 0 26px clamp(0px, 14vw, 174px);
 }
@@ -439,6 +439,10 @@
   font-size: 1.22rem;
   line-height: 1;
   margin: 0;
+  min-width: 92px;
+  overflow-wrap: normal;
+  text-wrap: balance;
+  word-break: normal;
 }
 
 .project-grid {
@@ -579,7 +583,7 @@
   box-shadow: 0 10px 20px rgba(55, 61, 88, 0.1);
   color: var(--blue);
   height: 58px;
-  padding: 13px;
+  padding: 12px;
   width: 58px;
 }
 
