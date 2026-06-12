@@ -1,25 +1,50 @@
 import { motion } from 'framer-motion'
 import {
   ArrowDown,
+  ArrowRight,
   ArrowUpRight,
-  BriefcaseBusiness,
-  CodeXml,
+  Bell,
+  ChartLine,
+  CircleCheck,
+  Heart,
   Mail,
   MapPin,
+  Package,
   Rocket,
   Send,
+  Timer,
+  TrendingUp,
 } from 'lucide-react'
 import type { ReactElement, SVGProps } from 'react'
 import './App.css'
-import { educationItems, experiences, impacts, navigationItems, skills, type SkillLogo } from './content'
-
-const projectTags: readonly string[][] = [
-  ['Go', 'Kafka', 'MongoDB', 'Grafana'],
-  ['Java', 'Spring Boot', 'AWS Lambda', 'Docker'],
-  ['Grafana', 'Docker', 'AWS', 'MongoDB'],
-]
+import {
+  education,
+  experiences,
+  impacts,
+  languages,
+  navigationItems,
+  skills,
+  type ImpactItem,
+  type SkillLogo,
+} from './content'
 
 type LogoProps = Readonly<SVGProps<SVGSVGElement>>
+
+function GitHubLogo(props: LogoProps): ReactElement {
+  return (
+    <svg viewBox="0 0 24 24" role="img" aria-label="GitHub" fill="currentColor" {...props}>
+      <path d="M12 1.7a10.5 10.5 0 0 0-3.32 20.46c.53.1.72-.23.72-.5l-.01-1.95c-2.92.63-3.54-1.24-3.54-1.24-.48-1.21-1.17-1.54-1.17-1.54-.95-.65.07-.63.07-.63 1.06.07 1.61 1.08 1.61 1.08.94 1.6 2.46 1.14 3.06.87.1-.68.37-1.14.66-1.4-2.33-.27-4.79-1.17-4.79-5.2 0-1.14.41-2.08 1.08-2.81-.11-.27-.47-1.34.1-2.78 0 0 .88-.28 2.89 1.07a10 10 0 0 1 5.26 0c2-1.35 2.88-1.07 2.88-1.07.58 1.44.22 2.51.11 2.78.67.73 1.08 1.67 1.08 2.81 0 4.04-2.46 4.92-4.81 5.18.38.33.72.97.72 1.96l-.01 2.91c0 .28.19.61.73.5A10.5 10.5 0 0 0 12 1.7Z" />
+    </svg>
+  )
+}
+
+function LinkedInLogo(props: LogoProps): ReactElement {
+  return (
+    <svg viewBox="0 0 24 24" role="img" aria-label="LinkedIn" fill="currentColor" {...props}>
+      <path d="M4.5 3.2a1.95 1.95 0 1 1 0 3.9 1.95 1.95 0 0 1 0-3.9ZM2.9 8.6h3.2V21H2.9V8.6Zm5.4 0h3.07v1.7h.05c.43-.81 1.47-1.66 3.03-1.66 3.24 0 3.84 2.13 3.84 4.9V21h-3.2v-6.6c0-1.58-.03-3.6-2.2-3.6-2.2 0-2.54 1.72-2.54 3.49V21H8.3V8.6Z" />
+    </svg>
+  )
+}
 
 function TelecentroLogo(props: LogoProps): ReactElement {
   return (
@@ -178,21 +203,6 @@ function UtnLogo(props: LogoProps): ReactElement {
   )
 }
 
-function LanguageDotsLogo(props: LogoProps): ReactElement {
-  return (
-    <svg viewBox="0 0 64 64" role="img" aria-label="Idiomas" {...props}>
-      <g fill="#5e7fea">
-        <circle cx="19" cy="22" r="5" />
-        <circle cx="32" cy="22" r="5" />
-        <circle cx="45" cy="22" r="5" />
-        <circle cx="19" cy="42" r="5" />
-        <circle cx="32" cy="42" r="5" />
-      </g>
-      <circle cx="45" cy="42" r="5" fill="#d7def3" />
-    </svg>
-  )
-}
-
 const skillLogos: Record<SkillLogo, (props: LogoProps) => ReactElement> = {
   go: GoLogo,
   python: PythonLogo,
@@ -213,14 +223,6 @@ function CompanyLogo(props: { readonly company: string }): ReactElement {
   return <WarnerLogo />
 }
 
-function AboutLogo(props: { readonly title: string }): ReactElement {
-  if (props.title === 'Ingenieria en Sistemas') {
-    return <UtnLogo />
-  }
-
-  return <LanguageDotsLogo />
-}
-
 function Header(): ReactElement {
   return (
     <header className="site-header">
@@ -237,10 +239,10 @@ function Header(): ReactElement {
       </nav>
       <div className="social-nav" aria-label="Links sociales">
         <a href="https://github.com/brunobarlari" target="_blank" rel="noreferrer" aria-label="GitHub">
-          <CodeXml size={19} />
+          <GitHubLogo width={19} height={19} />
         </a>
         <a href="https://linkedin.com/in/bruno-barlari" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-          <BriefcaseBusiness size={19} />
+          <LinkedInLogo width={19} height={19} />
         </a>
         <a href="mailto:bruno2004b@gmail.com" aria-label="Email">
           <Mail size={19} />
@@ -259,10 +261,12 @@ function Hero(): ReactElement {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: 'easeOut' }}
       >
-        <h1>Software Engineer</h1>
+        <h1>
+          Backend systems that scale and <span>make sense.</span>
+        </h1>
         <p>
           I&apos;m Bruno Barlari, a Backend Developer based in Buenos Aires. I build reliable,
-          observable and evolvable systems with clean code and curiosity.
+          observable and evolvable systems with clean code and empathy.
         </p>
         <div className="hero-actions">
           <a className="primary-action" href="#projects">
@@ -330,7 +334,7 @@ function Experience(): ReactElement {
           <span>Next</span>
           <h3>What&apos;s next?</h3>
           <strong>Open to meaningful projects</strong>
-          <p>Always learning, building and looking for systems that deserve strong foundations.</p>
+          <p>Always learning and building. Open to new challenges and meaningful projects.</p>
           <div className="experience-token">?</div>
         </article>
       </div>
@@ -365,32 +369,103 @@ function Skills(): ReactElement {
   )
 }
 
+function MountainsSketch(props: LogoProps): ReactElement {
+  return (
+    <svg viewBox="0 0 240 120" role="presentation" {...props}>
+      <g fill="none" stroke="#39466b" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.55" strokeWidth="2.4">
+        <path d="M18 104 76 34l34 42 22-26 50 54" fill="rgba(255,255,255,0.5)" />
+        <path d="M150 104l36-44 36 44" fill="rgba(255,255,255,0.35)" />
+        <path d="M64 49h17l-3 9h-14" fill="#8fc7ae" stroke="none" />
+        <path d="M64 34v26" />
+        <path d="M10 104h220" strokeDasharray="2 8" />
+      </g>
+    </svg>
+  )
+}
+
+function CratesSketch(props: LogoProps): ReactElement {
+  return (
+    <svg viewBox="0 0 240 120" role="presentation" {...props}>
+      <g fill="rgba(255,255,255,0.5)" stroke="#39466b" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.55" strokeWidth="2.4">
+        <path d="M58 56l26-12 26 12v28l-26 12-26-12V56Z" />
+        <path d="M58 56l26 12 26-12M84 68v28" />
+        <path d="M124 44l22-10 22 10v24l-22 10-22-10V44Z" />
+        <path d="M124 44l22 10 22-10M146 54v24" />
+        <path d="M150 86l18-8 18 8v18l-18 8-18-8V86Z" />
+      </g>
+      <path d="M16 106h208" fill="none" stroke="#39466b" strokeDasharray="2 8" strokeLinecap="round" strokeOpacity="0.55" strokeWidth="2.4" />
+    </svg>
+  )
+}
+
+function TowerSketch(props: LogoProps): ReactElement {
+  return (
+    <svg viewBox="0 0 240 120" role="presentation" {...props}>
+      <g fill="rgba(255,255,255,0.5)" stroke="#39466b" strokeLinecap="round" strokeLinejoin="round" strokeOpacity="0.55" strokeWidth="2.4">
+        <path d="M150 28h44l-6 16h-32l-6-16Z" />
+        <path d="M158 44h28l-4 60h-20l-4-60Z" />
+        <path d="M36 78h38v26H36zM86 72h38v32H86z" />
+        <path d="M46 104v6h18M96 104v6h18" fill="none" />
+        <path d="M44 86l10 8M104 80l10 10" fill="none" />
+      </g>
+      <path d="M14 110h212" fill="none" stroke="#39466b" strokeDasharray="2 8" strokeLinecap="round" strokeOpacity="0.55" strokeWidth="2.4" />
+    </svg>
+  )
+}
+
+const sketchArt: Record<ImpactItem['sketch'], (props: LogoProps) => ReactElement> = {
+  mountains: MountainsSketch,
+  crates: CratesSketch,
+  tower: TowerSketch,
+}
+
+const badgeIcons: Record<ImpactItem['sketch'], ReactElement> = {
+  mountains: <ChartLine size={22} aria-hidden="true" />,
+  crates: <Package size={22} aria-hidden="true" />,
+  tower: <Bell size={22} aria-hidden="true" />,
+}
+
+const metricIcons: Record<ImpactItem['metricKind'], ReactElement> = {
+  growth: <TrendingUp size={18} aria-hidden="true" />,
+  speed: <Timer size={18} aria-hidden="true" />,
+  check: <CircleCheck size={18} aria-hidden="true" />,
+}
+
 function Projects(): ReactElement {
   return (
     <section className="projects-section page-section" aria-labelledby="projects">
-      <SectionTitle id="projects" title="Projects">
-        Projects where I helped teams move faster and systems behave better.
+      <SectionTitle id="projects" title="Selected impact">
+        Projects where I helped teams move faster and users happier.
       </SectionTitle>
       <div className="project-grid">
-        {impacts.map((item, index) => (
-          <motion.article
-            className={`project-card ${item.accent}`}
-            key={item.title}
-            whileHover={{ y: -8, rotate: index === 1 ? 0.4 : -0.4 }}
-            transition={{ type: 'spring', stiffness: 250, damping: 20 }}
-          >
-            <div className="project-sketch" aria-hidden="true">
-              <span />
-            </div>
-            <h3>{item.title}</h3>
-            <div className="tag-row">
-              {projectTags[index]?.map((tag) => (
-                <span key={tag}>{tag}</span>
-              ))}
-            </div>
-            <p>{item.body}</p>
-          </motion.article>
-        ))}
+        {impacts.map((item, index) => {
+          const Sketch = sketchArt[item.sketch]
+
+          return (
+            <motion.article
+              className={`project-card ${item.accent}`}
+              key={item.title}
+              whileHover={{ y: -8, rotate: index === 1 ? 0.4 : -0.4 }}
+              transition={{ type: 'spring', stiffness: 250, damping: 20 }}
+            >
+              <div className="project-sketch" aria-hidden="true">
+                <Sketch />
+                <span className="project-badge">{badgeIcons[item.sketch]}</span>
+              </div>
+              <h3>{item.title}</h3>
+              <div className="tag-row">
+                {item.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+              <p>{item.body}</p>
+              <div className={`project-metric ${item.metricKind}`}>
+                {metricIcons[item.metricKind]}
+                {item.metric}
+              </div>
+            </motion.article>
+          )
+        })}
       </div>
     </section>
   )
@@ -408,15 +483,39 @@ function About(): ReactElement {
         </p>
         <p>I love learning, mentoring and building tools that make teams more effective.</p>
       </article>
-      {educationItems.slice(0, 2).map((item) => {
-        return (
-          <article className="about-card" key={item.title}>
-            <AboutLogo title={item.title} />
-            <h3>{item.title}</h3>
-            <p>{item.body}</p>
+      <div className="about-aside">
+        <a className="view-more" href="#projects">
+          View more projects
+          <ArrowRight size={18} aria-hidden="true" />
+        </a>
+        <div className="about-cards">
+          <article className="about-card">
+            <h3>Education</h3>
+            <div className="education-entry">
+              <UtnLogo aria-hidden="true" />
+              <div>
+                <strong>{education.school}</strong>
+                <p>{education.degree}</p>
+                <p>{education.period}</p>
+              </div>
+            </div>
           </article>
-        )
-      })}
+          <article className="about-card">
+            <h3>Languages</h3>
+            {languages.map((language) => (
+              <div className="language-row" key={language.name}>
+                <span className="language-name">{language.name}</span>
+                <span className="language-dots" aria-label={`${language.name}: ${language.level}`}>
+                  {Array.from({ length: 5 }, (_, dot) => (
+                    <i className={dot < language.dots ? 'filled' : ''} key={dot} />
+                  ))}
+                </span>
+                <span className="language-level">{language.level}</span>
+              </div>
+            ))}
+          </article>
+        </div>
+      </div>
     </section>
   )
 }
@@ -435,14 +534,14 @@ function Contact(): ReactElement {
           </span>
         </a>
         <a href="https://linkedin.com/in/bruno-barlari" target="_blank" rel="noreferrer">
-          <BriefcaseBusiness size={28} aria-hidden="true" />
+          <LinkedInLogo width={28} height={28} aria-hidden="true" />
           <span>
             LinkedIn
             <small>/in/bruno-barlari</small>
           </span>
         </a>
         <a href="https://github.com/brunobarlari" target="_blank" rel="noreferrer">
-          <CodeXml size={28} aria-hidden="true" />
+          <GitHubLogo width={28} height={28} aria-hidden="true" />
           <span>
             GitHub
             <small>/brunobarlari</small>
@@ -465,6 +564,10 @@ function Footer(): ReactElement {
   return (
     <footer className="site-footer">
       <span>© 2026 Bruno Barlari</span>
+      <span className="footer-care">
+        <Heart size={14} aria-hidden="true" />
+        Made with care in Buenos Aires
+      </span>
       <a href="#home">Back to top ↑</a>
     </footer>
   )
@@ -477,8 +580,8 @@ function App(): ReactElement {
       <main>
         <Hero />
         <Experience />
-        <Projects />
         <Skills />
+        <Projects />
         <About />
         <Contact />
       </main>
